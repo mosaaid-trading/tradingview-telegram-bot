@@ -1,8 +1,9 @@
-from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+from http.server import BaseHTTPRequestHandler
 
-app = FastAPI()
-
-@app.get("/")
-async def root():
-    return JSONResponse(content={"message": "Telegram bot is working"})
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.end_headers()
+        message = '{"message": "Telegram bot is working"}'
+        self.wfile.write(message.encode())
